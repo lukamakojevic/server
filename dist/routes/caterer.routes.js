@@ -39,5 +39,11 @@ catererRouter.route('/deleteImage').post((req, res) => {
 catererRouter.route('/deleteObject').post((req, res) => {
     new caterer_controller_1.CatererController().deleteObject(req, res);
 });
+catererRouter.route('/addNewGuest').post((req, res) => {
+    new caterer_controller_1.CatererController().addNewGuest(req, res);
+});
+catererRouter.route('/getAllGuests').post((req, res) => {
+    new caterer_controller_1.CatererController().getAllGuests(req, res);
+});
 exports.default = catererRouter;
 //# sourceMappingURL=caterer.routes.js.map

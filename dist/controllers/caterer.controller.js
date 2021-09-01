@@ -8,6 +8,7 @@ const object_1 = __importDefault(require("../models/object"));
 const request_1 = __importDefault(require("../models/request"));
 const user_1 = __importDefault(require("../models/user"));
 const image_1 = __importDefault(require("../models/image"));
+const guest_1 = __importDefault(require("../models/guest"));
 class CatererController {
     constructor() {
         this.getAllObjects = (req, res) => {
@@ -151,6 +152,24 @@ class CatererController {
                 });
             }).catch((err) => {
                 res.status(400).json("");
+            });
+        };
+        this.addNewGuest = (req, res) => {
+            let guest = new guest_1.default(req.body);
+            guest.save().then((ret) => {
+                res.status(200).json({ "message": "", "object": ret });
+            }).catch((err) => {
+                res.status(400).json({ "message": "Greška pri prijavi gosta." });
+            });
+        };
+        this.getAllGuests = (req, res) => {
+            let objectId = req.body.id;
+            guest_1.default.find({ "objectId": objectId }, (err, guests) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json(guests);
+                }
             });
         };
     }

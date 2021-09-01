@@ -69,4 +69,16 @@ catererRouter.route('/deleteObject').post(
     }
 );
 
+catererRouter.route('/addNewGuest').post(
+    (req, res)=>{
+        new CatererController().addNewGuest(req, res);
+    }
+);
+
+catererRouter.route('/getAllGuests').post(
+    (req, res)=>{
+        new CatererController().getAllGuests(req, res);
+    }
+);
+
 export default catererRouter;

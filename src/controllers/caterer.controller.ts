@@ -3,6 +3,7 @@ import MyObject from '../models/object';
 import MyRequest from '../models/request';
 import User from '../models/user';
 import Image from '../models/image';
+import Guest from '../models/guest';
 
 export class CatererController{
     getAllObjects = (req: express.Request, res: express.Response)=>{
@@ -18,7 +19,7 @@ export class CatererController{
     }
 
     addNewObject = (req: express.Request, res: express.Response)=>{
-
+        
         let object = new MyObject(req.body);
         
         object.save().then((ret)=>{
@@ -188,5 +189,29 @@ export class CatererController{
             res.status(400).json("");
         })        
     }
+
+    addNewGuest = (req: express.Request, res: express.Response)=>{
+
+        let guest = new Guest(req.body);
+
+        guest.save().then((ret)=>{
+            res.status(200).json({ "message": "" , "object":ret});
+        }).catch((err)=>{
+            res.status(400).json({ "message": "Greška pri prijavi gosta."});
+        })
+    }
+
+    getAllGuests = (req: express.Request, res: express.Response)=>{
+
+        let objectId = req.body.id;
+        
+        Guest.find({ "objectId" : objectId},
+            (err, guests)=>{
+                if(err) console.log(err);
+                else {
+                    res.json(guests);                      
+                }
+        })
+    } 
 
 }
