@@ -9,5 +9,8 @@ const userRouter = express_1.default.Router();
 userRouter.route('/login').post((req, res) => {
     new user_controller_1.UserController().login(req, res);
 });
+userRouter.route('/loginCheck').post((req, res) => {
+    new user_controller_1.UserController().loginCheck(req, res);
+});
 exports.default = userRouter;
 //# sourceMappingURL=user.routes.js.map

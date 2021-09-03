@@ -30,6 +30,20 @@ class UserController {
                 }
             });
         };
+        this.loginCheck = (req, res) => {
+            let username = req.body.username;
+            let password = req.body.password;
+            user_1.default.findOne({ 'username': username, 'password': password }, (err, user) => {
+                if (err)
+                    console.log(err);
+                else if (user) {
+                    res.json(true);
+                }
+                else {
+                    res.json(false);
+                }
+            });
+        };
     }
 }
 exports.UserController = UserController;

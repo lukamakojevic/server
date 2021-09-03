@@ -8,4 +8,10 @@ userRouter.route('/login').post(
     }
 );
 
+userRouter.route('/loginCheck').post(
+    (req, res)=>{
+        new UserController().loginCheck(req, res)
+    }
+);
+
 export default userRouter;
