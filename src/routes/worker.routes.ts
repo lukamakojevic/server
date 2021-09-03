@@ -27,4 +27,10 @@ workerRouter.route('/declineRequest').post(
     }
 );
 
+workerRouter.route('/getAllUnpaiedTaxes').post(
+    (req, res)=>{
+        new WorkerController().getAllUnpaiedTaxes(req, res)
+    }
+);
+
 export default workerRouter;

@@ -9,6 +9,7 @@ const request_1 = __importDefault(require("../models/request"));
 const user_1 = __importDefault(require("../models/user"));
 const image_1 = __importDefault(require("../models/image"));
 const guest_1 = __importDefault(require("../models/guest"));
+const tax_1 = __importDefault(require("../models/tax"));
 class CatererController {
     constructor() {
         this.getAllObjects = (req, res) => {
@@ -71,6 +72,27 @@ class CatererController {
             let details = req.body.details;
             object_1.default.findOneAndUpdate({ '_id': id }, {
                 "details": details
+            }, {
+                "useFindAndModify": false
+            }, (err, objects) => {
+                if (err)
+                    console.log(err);
+                else {
+                    object_1.default.find({ '_id': id }, (err, objects) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            res.json({ message: "", content: objects });
+                        }
+                    });
+                }
+            });
+        };
+        this.updateObjectAddress = (req, res) => {
+            let id = req.body._id;
+            let address = req.body.address;
+            object_1.default.findOneAndUpdate({ '_id': id }, {
+                "address": address
             }, {
                 "useFindAndModify": false
             }, (err, objects) => {
@@ -169,6 +191,128 @@ class CatererController {
                     console.log(err);
                 else {
                     res.json(guests);
+                }
+            });
+        };
+        this.updateGuest = (req, res) => {
+            let id = req.body._id;
+            let objectId = req.body.objectId;
+            let checkedOut = req.body.checkedOut;
+            let body = req.body;
+            guest_1.default.findOneAndUpdate({ '_id': id }, {
+                "name": req.body.name,
+                "idNumber": req.body.idNumber,
+                "details": req.body.details,
+                "kind": req.body.kind,
+                "age": req.body.age,
+                "dateCheckIn": req.body.dateCheckIn,
+                "nights": req.body.nights,
+                "dateCheckOut": req.body.dateCheckOut,
+                "checkedOut": req.body.checkedOut
+            }, {
+                "useFindAndModify": false
+            }, (err, guests) => {
+                if (err)
+                    console.log(err);
+                else {
+                    if (checkedOut) {
+                        object_1.default.findOne({ '_id': objectId }, (err, object) => {
+                            if (err)
+                                console.log(err);
+                            else {
+                                let catererId = object.owner;
+                                let price;
+                                if (body.nights < 30) {
+                                    if (body.age < 7) {
+                                        price = 0;
+                                    }
+                                    else if (body.age >= 7 && body.age < 15) {
+                                        price = body.nights * 79;
+                                    }
+                                    else {
+                                        price = body.nights * 159;
+                                    }
+                                }
+                                else {
+                                    price = 0;
+                                }
+                                const taxData = {
+                                    'objectId': objectId,
+                                    'catererId': catererId,
+                                    'guest': body,
+                                    'price': price,
+                                    'paid': false
+                                };
+                                let tax = new tax_1.default(taxData);
+                                tax.save().then((ret) => {
+                                    guest_1.default.find({ "objectId": objectId }, (err, guests) => {
+                                        if (err)
+                                            console.log(err);
+                                        else {
+                                            res.json(guests);
+                                        }
+                                    });
+                                }).catch((err) => {
+                                    res.status(400).json({ "message": "Greška pri obračunu takse." });
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        guest_1.default.find({ "objectId": objectId }, (err, guests) => {
+                            if (err)
+                                console.log(err);
+                            else {
+                                res.json(guests);
+                            }
+                        });
+                    }
+                }
+            });
+        };
+        this.removeGuest = (req, res) => {
+            let id = req.body._id;
+            let objectId = req.body.objectId;
+            guest_1.default.deleteOne({ "_id": id }).then((ret) => {
+                guest_1.default.find({ "objectId": objectId }, (err, guests) => {
+                    if (err)
+                        console.log(err);
+                    else {
+                        res.json(guests);
+                    }
+                });
+            });
+        };
+        this.getAllTaxes = (req, res) => {
+            let objectId = req.body.objectId;
+            tax_1.default.find({ "objectId": objectId }, (err, taxes) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json(taxes);
+                }
+            });
+        };
+        this.payTax = (req, res) => {
+            let taxId = req.body.taxId;
+            let bill = req.body.bill;
+            tax_1.default.findOneAndUpdate({ '_id': taxId }, {
+                "paid": true,
+                "billInfo": bill
+            }, {
+                "useFindAndModify": false
+            }, (err, tax) => {
+                if (err)
+                    console.log(err);
+                else {
+                    let objectId = tax.objectId;
+                    tax_1.default.find({ "objectId": objectId }, (err, taxes) => {
+                        if (err)
+                            console.log(err);
+                        else {
+                            res.json(taxes);
+                        }
+                    });
                 }
             });
         };

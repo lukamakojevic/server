@@ -24,6 +24,9 @@ catererRouter.route('/updateObjectName').post((req, res) => {
 catererRouter.route('/updateObjectDetails').post((req, res) => {
     new caterer_controller_1.CatererController().updateObjectDetails(req, res);
 });
+catererRouter.route('/updateObjectAddress').post((req, res) => {
+    new caterer_controller_1.CatererController().updateObjectAddress(req, res);
+});
 catererRouter.route('/grantPremission').post((req, res) => {
     new caterer_controller_1.CatererController().grantPremission(req, res);
 });
@@ -44,6 +47,18 @@ catererRouter.route('/addNewGuest').post((req, res) => {
 });
 catererRouter.route('/getAllGuests').post((req, res) => {
     new caterer_controller_1.CatererController().getAllGuests(req, res);
+});
+catererRouter.route('/updateGuest').post((req, res) => {
+    new caterer_controller_1.CatererController().updateGuest(req, res);
+});
+catererRouter.route('/removeGuest').post((req, res) => {
+    new caterer_controller_1.CatererController().removeGuest(req, res);
+});
+catererRouter.route('/getAllTaxes').post((req, res) => {
+    new caterer_controller_1.CatererController().getAllTaxes(req, res);
+});
+catererRouter.route('/payTax').post((req, res) => {
+    new caterer_controller_1.CatererController().payTax(req, res);
 });
 exports.default = catererRouter;
 //# sourceMappingURL=caterer.routes.js.map

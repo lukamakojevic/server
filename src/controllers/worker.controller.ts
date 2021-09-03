@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../models/user';
 import MyRequest from '../models/request';
 import MyObject from '../models/object';
+import Tax from '../models/tax';
 
 export class WorkerController{
     getAllCaterers = (req: express.Request, res: express.Response)=>{
@@ -81,4 +82,16 @@ export class WorkerController{
                     }
         })       
     }
+
+
+    getAllUnpaiedTaxes = (req: express.Request, res: express.Response)=>{
+       
+        Tax.find({ "paid" : false},
+            (err, requests)=>{
+                if(err) console.log(err);
+                else {
+                    res.json(requests);                      
+                }
+        })
+    } 
 }

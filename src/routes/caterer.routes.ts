@@ -39,6 +39,12 @@ catererRouter.route('/updateObjectDetails').post(
     }
 );
 
+catererRouter.route('/updateObjectAddress').post(
+    (req, res)=>{
+        new CatererController().updateObjectAddress(req, res);
+    }
+);
+
 catererRouter.route('/grantPremission').post(
     (req, res)=>{
         new CatererController().grantPremission(req, res);
@@ -78,6 +84,30 @@ catererRouter.route('/addNewGuest').post(
 catererRouter.route('/getAllGuests').post(
     (req, res)=>{
         new CatererController().getAllGuests(req, res);
+    }
+);
+
+catererRouter.route('/updateGuest').post(
+    (req, res)=>{
+        new CatererController().updateGuest(req, res);
+    }
+);
+
+catererRouter.route('/removeGuest').post(
+    (req, res)=>{
+        new CatererController().removeGuest(req, res);
+    }
+);
+
+catererRouter.route('/getAllTaxes').post(
+    (req, res)=>{
+        new CatererController().getAllTaxes(req, res);
+    }
+);
+
+catererRouter.route('/payTax').post(
+    (req, res)=>{
+        new CatererController().payTax(req, res);
     }
 );
 

@@ -7,6 +7,7 @@ exports.WorkerController = void 0;
 const user_1 = __importDefault(require("../models/user"));
 const request_1 = __importDefault(require("../models/request"));
 const object_1 = __importDefault(require("../models/object"));
+const tax_1 = __importDefault(require("../models/tax"));
 class WorkerController {
     constructor() {
         this.getAllCaterers = (req, res) => {
@@ -69,6 +70,15 @@ class WorkerController {
                     console.log(err);
                 else {
                     res.json(req);
+                }
+            });
+        };
+        this.getAllUnpaiedTaxes = (req, res) => {
+            tax_1.default.find({ "paid": false }, (err, requests) => {
+                if (err)
+                    console.log(err);
+                else {
+                    res.json(requests);
                 }
             });
         };

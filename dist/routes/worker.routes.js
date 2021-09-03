@@ -18,5 +18,8 @@ workerRouter.route('/acceptRequest').post((req, res) => {
 workerRouter.route('/declineRequest').post((req, res) => {
     new worker_controller_1.WorkerController().declineRequest(req, res);
 });
+workerRouter.route('/getAllUnpaiedTaxes').post((req, res) => {
+    new worker_controller_1.WorkerController().getAllUnpaiedTaxes(req, res);
+});
 exports.default = workerRouter;
 //# sourceMappingURL=worker.routes.js.map

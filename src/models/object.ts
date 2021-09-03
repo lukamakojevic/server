@@ -7,6 +7,9 @@ let MyObject = new Schema(
         name: {
             type: String
         },
+        address: {
+            type: String
+        },
         type: {
             type: Number
         },

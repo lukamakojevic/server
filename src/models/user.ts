@@ -19,6 +19,9 @@ let User = new Schema(
         name: {
             type: String
         },
+        address: {
+            type: String
+        },
         registeredFlag: {
             type:Boolean
         },

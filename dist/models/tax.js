@@ -5,31 +5,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const Schema = mongoose_1.default.Schema;
-let User = new Schema({
-    username: {
+let Tax = new Schema({
+    objectId: {
         type: String
     },
-    password: {
+    catererId: {
         type: String
     },
-    type: {
+    guest: {
+        type: JSON
+    },
+    price: {
         type: Number
     },
-    kind: {
-        type: Number
-    },
-    name: {
-        type: String
-    },
-    address: {
-        type: String
-    },
-    registeredFlag: {
+    paid: {
         type: Boolean
     },
-    details: {
-        type: String
-    }
+    billInfo: {
+        type: JSON
+    },
 });
-exports.default = mongoose_1.default.model('User', User, 'korisnici');
-//# sourceMappingURL=user.js.map
+exports.default = mongoose_1.default.model('Tax', Tax, 'takse');
+//# sourceMappingURL=tax.js.map

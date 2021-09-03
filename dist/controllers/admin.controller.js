@@ -25,6 +25,7 @@ class AdminController {
                 "kind": req.body.kind,
                 "registeredFlag": req.body.registeredFlag,
                 "name": req.body.name,
+                "address": req.body.address,
                 "details": req.body.details
             }, {
                 "useFindAndModify": false
@@ -55,6 +56,7 @@ class AdminController {
                     user.save().then((ret) => {
                         res.status(200).json("");
                     }).catch((err) => {
+                        console.log(err);
                         res.status(400).json(err);
                     });
                 }
