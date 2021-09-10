@@ -15,7 +15,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 mongoose.connect('mongodb://localhost:27017/turisticke_usluge');
 const connection = mongoose.connection;
 connection.once('open', ()=>{
-    console.log('mongo ok')
+    console.log('Konekcija sa bazom je uspostavljena.')
 });
 
 const router = express.Router();
